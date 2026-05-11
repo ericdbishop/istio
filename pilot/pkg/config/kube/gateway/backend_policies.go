@@ -715,10 +715,6 @@ func btlsHasHigherPriority(a, b metav1.Object) bool {
 	if ts != 0 {
 		return ts < 0
 	}
-	ns := cmp.Compare(a.GetNamespace(), b.GetNamespace())
-	if ns != 0 {
-		return ns < 0
-	}
 	return a.GetName() < b.GetName()
 }
 
