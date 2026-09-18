@@ -387,7 +387,7 @@ func NewController(
 		return []TypedNamespacedName{o.Backend}
 	})
 
-	DestinationRules, BackendClientCertificates := DestinationRuleCollection(
+	destinationRuleResult := DestinationRuleCollection(
 		inputs.BackendTrafficPolicy,
 		inputs.BackendTLSPolicies,
 		inputs.Backends,
@@ -399,6 +399,8 @@ func NewController(
 		inputs.Services,
 		opts,
 	)
+	DestinationRules := destinationRuleResult.DestinationRules
+	BackendClientCertificates := destinationRuleResult.BackendClientCertificates
 
 	GatewayFinalStatus := FinalGatewayStatusCollection(GatewaysStatus, RouteAttachments, RouteAttachmentsIndex, opts)
 	status.RegisterStatus(c.status, GatewayFinalStatus, GetStatus, c.tagWatcher.AccessUnprotected())
