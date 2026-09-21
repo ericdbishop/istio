@@ -129,7 +129,7 @@ func (cb *ClusterBuilder) buildUpstreamClusterTLSContext(opts *buildClusterOpts,
 	privilegedCredentialLookup := tls.CredentialName != "" &&
 		!strings.HasPrefix(tls.CredentialName, credentials.KubernetesConfigMapTypeURI) &&
 		tls.CredentialName != credentials.InvalidSecretTypeURI
-	if cb.sidecarProxy() && !opts.isDrWithSelector {
+	if cb.sidecarProxy() && !opts.isDrWithSelector && !opts.isBackendClientCertificate {
 		// We ignore the CaCertCredentialName for sidecar when the DestinationRule
 		// does not have a selector.
 		if privilegedCredentialLookup &&
